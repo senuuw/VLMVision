@@ -1,0 +1,15 @@
+Filename: test1.png
+Result: The image captures a lively scene at a restaurant, where patrons are enjoying their meals. In the foreground, a person is holding a plate with a serving of food that appears to be meat. The dish is being served on a white plate, which is placed on a marble countertop.
+
+Filename: test2.png
+Result: The image captures a bustling scene at a café, with the main focus on a person's hands skillfully operating a coffee machine. The individual is pouring a freshly brewed cup of coffee into a white mug that sits on a counter.
+
+Filename: test3.png
+Result: The image captures a serene scene of a person walking along a trail in a dense forest. The trail, made of dirt and rocks, winds its way through the towering trees that reach up to the sky. The lush green foliage adds a sense of tranquility to the scene. The perspective of the image is from above, providing a bird's eye view of the hiker navigating the path amidst the tall trees.
+
+Filename: test4.png
+Result: The image captures a city street at night, bathed in the soft glow of streetlights. The ground glistens with wetness, reflecting the lights from the street lamps and overhead signs. The perspective is from a low angle, giving a sense of depth and distance as the street extends into the background. Buildings rise on either side, their windows twinkling like stars against the dark sky. A few cars are parked along the curb, silent and still in the quiet of the night. The scene is devoid of people, adding to the serene atmosphere. It's a snapshot of urban life after a rain shower, where even the most ordinary scenes can become extraordinary under the right conditions.
+
+Filename: test5.png
+Result: The image captures a lively scene of an indoor sports event, specifically a game of volleyball. The court is spacious and well-lit, with a net stretching across the width of the room. A group of people are engaged in the game, their positions scattered across the court. Some players are closer to the net, while others are further away, possibly in motion as they play.
+
