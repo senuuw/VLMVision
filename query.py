@@ -41,9 +41,9 @@ def process_directory(directory, model, tokenizer, prompt, output_file):
             file.write(f"Filename: {filename}\nResult: {result}\n\n")
             print(f"Result for {filename}: {result}")
 
-# Usage example
+
 directory_path = 'examples'
-prompt = '<ImageHere> Please using one word describe if the scene is outdoor or indoor.'
+prompt = '<ImageHere> Please using one word describe if the scene is outdoor or indoor'
 script_directory = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located
 output_file = os.path.join(script_directory, 'results.txt')  # Output file in the same directory as the script
 process_directory(directory_path, model, tokenizer, prompt, output_file)
