@@ -1,15 +1,150 @@
-Filename: test1.png
-Result: indoor
+Filename: video1_frame1.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
 
-Filename: test2.png
-Result: indoor
+Filename: video1_frame2.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
 
-Filename: test3.png
-Result: outdoor
+Filename: video1_frame3.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
 
-Filename: test4.png
-Result: outdoor
+Filename: video1_frame4.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['dynamic', 'dynamic', 'dynamic']
 
-Filename: test5.png
-Result: indoor
+Filename: video1_frame5.jpg
+['indoor', 'indoor', 'indoor']
+['The lighting in the image is dark and blurry, making it difficult to determine the quality of the lighting.', 'The lighting in the image is dark and blurry, making it difficult to determine the quality of the lighting.', 'The lighting in the image is dark and blurry, making it difficult to determine the quality of the lighting.']
+['dynamic', 'dynamic', 'dynamic']
+
+Filename: video2_frame1.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video2_frame2.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video2_frame3.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['dynamic', 'dynamic', 'dynamic']
+
+Filename: video2_frame4.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video2_frame5.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video3_frame1.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['dynamic', 'dynamic', 'dynamic']
+
+Filename: video3_frame2.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['dynamic', 'dynamic', 'dynamic']
+
+Filename: video3_frame3.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video3_frame4.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['dynamic', 'dynamic', 'dynamic']
+
+Filename: video3_frame5.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video4_frame1.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video4_frame2.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video4_frame3.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video4_frame4.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video4_frame5.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['dynamic', 'dynamic', 'dynamic']
+
+Filename: video6_frame1.jpg
+['outdoor', 'outdoor', 'outdoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video6_frame2.jpg
+['outdoor', 'outdoor', 'outdoor']
+['bad', 'bad', 'bad']
+['dynamic', 'dynamic', 'dynamic']
+
+Filename: video6_frame3.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video6_frame4.jpg
+['outdoor', 'outdoor', 'outdoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video6_frame5.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video7_frame1.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video7_frame2.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video7_frame3.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video7_frame4.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video7_frame5.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
 

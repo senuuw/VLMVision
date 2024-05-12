@@ -1,7 +1,6 @@
 import os
 import torch, auto_gptq
-from PIL import Image
-import torchvision.transforms as transforms
+import numpy as np
 from transformers import AutoModel, AutoTokenizer
 from auto_gptq.modeling import BaseGPTQForCausalLM
 
@@ -32,18 +31,38 @@ def process_image(image_path, model, tokenizer, prompt):
     with torch.cuda.amp.autocast():
         response, _ = model.chat(tokenizer, query=prompt, image=image_path, history=[], do_sample=False) #do_sample=False for shorter responses
     return response
-def process_directory(directory, model, tokenizer, prompt, output_file):
+def process_directory(directory, model, tokenizer, prompt, output_file, n):
     with open(output_file, 'w') as file:
         for filename in os.listdir(directory):
             image_path = os.path.join(directory, filename)
-            print(f"Processing {filename}...")
-            result = process_image(image_path, model, tokenizer, prompt)
-            file.write(f"Filename: {filename}\nResult: {result}\n\n")
-            print(f"Result for {filename}: {result}")
+            result_list = process_imagenx(image_path, model, tokenizer, prompt, n)
+            file.write(f"Filename: {filename}\n")
+            for i, result in enumerate(result_list):
+                file.write(f"{result}\n")
+            file.write('\n')
+            print(f"Result for {filename}: {result_list}")
+
+def process_imagenx(image_path, model, tokenizer, prompt, n):
+    response_list= []
+    with torch.cuda.amp.autocast():
+        for current_prompt in prompt:
+            current_prompt_list = []
+            for i in range(n):
+                response = query(image_path, model, tokenizer, current_prompt)
+                current_prompt_list.append(response)
+            response_list.append(current_prompt_list)
+    return response_list
 
 
-directory_path = 'examples'
-prompt = '<ImageHere> Please using one word describe if the scene is outdoor or indoor'
+def query(image_path, model, tokenizer, prompt):
+    response, _ = model.chat(tokenizer, query=prompt, image=image_path, history=[], do_sample=False) #do_sample=False for shorter responses)
+    return response
+
+
+directory_path = 'gtframes'
+scene_prompt = '<ImageHere> Please using only one word describe if the scene is outdoor or indoor.'
+lighting_prompt = '<ImageHere> Please using only one word describe if the lighting in the image is bad or good.'
+dynamic_prompt = '<ImageHere> Imagine we are trying to split images into categories where the objects and people are mostly static or dynamic. Please reply with only one word static or dynamic for this image'
 script_directory = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located
 output_file = os.path.join(script_directory, 'results.txt')  # Output file in the same directory as the script
-process_directory(directory_path, model, tokenizer, prompt, output_file)
+process_directory(directory_path, model, tokenizer, [scene_prompt, lighting_prompt, dynamic_prompt], output_file, 3)
