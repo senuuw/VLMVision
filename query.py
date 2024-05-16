@@ -32,7 +32,7 @@ def process_directory(directory, model, tokenizer, prompt_list, output_file, n):
         for filename in os.listdir(directory):
             image_path = os.path.join(directory, filename)
             result_list = process_imagenx(image_path, model, tokenizer, prompt_list, n)
-            file.write(f"Filename: {filename}\n")
+            file.write(f"{filename},")
             for i, result in enumerate(result_list):
                 file.write(f"{result}\n")
             file.write('\n')
