@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-
+import pickle
 def create_dataframe(file_path):
     # This is terrible and a result of my poor planning. Hopefully I only have to do this once
 
@@ -46,4 +46,4 @@ def create_dataframe(file_path):
     return pd.DataFrame(sample_voted)
 
 sample_dataframe = create_dataframe('sampleresults.txt')
-print(sample_dataframe.to_string())
+sample_dataframe.to_pickle('samplevoted.pkl')
