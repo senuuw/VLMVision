@@ -27,11 +27,6 @@ model = InternLMXComposer2QForCausalLM.from_quantized(
 tokenizer = AutoTokenizer.from_pretrained(
     'internlm/internlm-xcomposer2-vl-7b-4bit', trust_remote_code=True)
 
-def process_image(image_path, model, tokenizer, prompt):
-    with torch.cuda.amp.autocast():
-        response, _ = model.chat(tokenizer, query=prompt, image=image_path, history=[], do_sample=False) #do_sample=False for shorter responses
-    return response
-
 def process_directory(directory, model, tokenizer, prompt_list, output_file, n):
     with open(output_file, 'w') as file:
         for filename in os.listdir(directory):
