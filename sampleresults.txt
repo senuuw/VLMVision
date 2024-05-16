@@ -1,0 +1,474 @@
+Filename: video1_frame1.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video1_frame2.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video1_frame3.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video1_frame4.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['dynamic', 'dynamic', 'dynamic']
+
+Filename: video1_frame5.jpg
+['indoor', 'indoor', 'indoor']
+['The lighting in the image is dark and not well-lit.', 'The lighting in the image is dark and blurry, making it difficult to discern specific details.', 'The lighting in the image is dark and blurry, making it difficult to determine the quality of the lighting.']
+['dynamic', 'dynamic', 'dynamic']
+
+Filename: video2_frame1.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video2_frame2.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video2_frame3.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['dynamic', 'dynamic', 'dynamic']
+
+Filename: video2_frame4.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video2_frame5.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video3_frame1.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['dynamic', 'dynamic', 'dynamic']
+
+Filename: video3_frame2.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['dynamic', 'dynamic', 'dynamic']
+
+Filename: video3_frame3.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video3_frame4.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['dynamic', 'dynamic', 'dynamic']
+
+Filename: video3_frame5.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video4_frame1.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video4_frame2.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video4_frame3.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video4_frame4.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video4_frame5.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['dynamic', 'dynamic', 'dynamic']
+
+Filename: video6_frame1.jpg
+['outdoor', 'outdoor', 'outdoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video6_frame2.jpg
+['outdoor', 'outdoor', 'outdoor']
+['bad', 'bad', 'bad']
+['dynamic', 'dynamic', 'dynamic']
+
+Filename: video6_frame3.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video6_frame4.jpg
+['outdoor', 'outdoor', 'outdoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video6_frame5.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video7_frame1.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video7_frame2.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video7_frame3.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video7_frame4.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video7_frame5.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video8_frame1.jpg
+['The image appears to be taken indoors, as evidenced by the presence of a desk and various art supplies scattered about.', 'The image appears to be taken indoors, as evidenced by the presence of a desk and various art supplies scattered about.', 'The image appears to be taken indoors, as evidenced by the presence of a desk and various art supplies scattered about.']
+["The lighting in the image is not clearly visible, so I cannot determine if it's good or bad.", 'The lighting in the image is not clear enough to make a proper assessment.', 'The lighting in the image is not good.']
+['static', 'static', 'static']
+
+Filename: video8_frame2.jpg
+['indoor', 'indoor', 'indoor']
+['The lighting in the image is good.', 'The lighting in the image is good.', 'The lighting in the image is good.']
+['static', 'static', 'static']
+
+Filename: video8_frame3.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video8_frame4.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video8_frame5.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video9_frame1.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video9_frame2.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video9_frame3.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video9_frame4.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video9_frame5.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video10_frame1.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video10_frame2.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video10_frame3.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video10_frame4.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video10_frame5.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video11_frame1.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video11_frame2.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video11_frame3.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video11_frame4.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video11_frame5.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video12_frame1.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video12_frame2.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video12_frame3.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video12_frame4.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video12_frame5.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video13_frame1.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video13_frame2.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video13_frame3.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video13_frame4.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video13_frame5.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video14_frame1.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video14_frame2.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video14_frame3.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video14_frame4.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video14_frame5.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video16_frame1.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video16_frame2.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video16_frame3.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['dynamic', 'dynamic', 'dynamic']
+
+Filename: video16_frame4.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video16_frame5.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video17_frame1.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video17_frame2.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video17_frame3.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video17_frame4.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video17_frame5.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video18_frame1.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video18_frame2.jpg
+['outdoor', 'outdoor', 'outdoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video18_frame3.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video18_frame4.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video18_frame5.jpg
+['indoor', 'indoor', 'indoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video19_frame1.jpg
+['outdoor', 'outdoor', 'outdoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video19_frame2.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video19_frame3.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video19_frame4.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video19_frame5.jpg
+['outdoor', 'outdoor', 'outdoor']
+['good', 'good', 'good']
+['static', 'static', 'static']
+
+Filename: video20_frame1.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video20_frame2.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video20_frame3.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video20_frame4.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video20_frame5.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video21_frame1.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video21_frame2.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video21_frame3.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video21_frame4.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
+
+Filename: video21_frame5.jpg
+['indoor', 'indoor', 'indoor']
+['bad', 'bad', 'bad']
+['static', 'static', 'static']
