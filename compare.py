@@ -1,9 +1,25 @@
 import numpy as np
 import pandas as pd
 import pickle
-def create_dataframe(file_path):
-    # This is terrible and a result of my poor planning. Hopefully I only have to do this once
 
+def process_line(line, sample_voted, majority_vote_list):
+    if line.startswith('Filename: '):
+        current_filename = line.split(': ')[1].strip()
+        sample_voted['File'].append(current_filename)
+    elif line.startswith('['):
+        # Clean line and just keep result1, result2, result3. Then split into list
+        clean_line = line.strip().replace('[', '').replace(']', '').replace("'", '').split(", ")
+        # Take majority vote
+        majority_vote_list.append(max(set(clean_line), key=clean_line.count))
+
+def categorize_samples(arrange_list, sample_voted):
+    for sample in arrange_list:
+        sample_voted['Setting'].append(sample[0] if sample[0] in ['outdoor', 'indoor'] else 'inconclusive')
+        sample_voted['Lighting'].append(sample[1] if sample[1] in ['good', 'bad'] else 'inconclusive')
+        sample_voted['Content Motion'].append(sample[2] if sample[2] in ['static', 'dynamic'] else 'inconclusive')
+
+def create_dataframe(file_path):
+    # Initialize the dictionary to hold the data
     sample_voted = {
         'File': [],
         'Setting': [],
@@ -11,39 +27,19 @@ def create_dataframe(file_path):
         'Content Motion': []
     }
 
-    file = open(file_path, "r")
     majority_vote_list = []
 
-    for line in file:
-        if line.startswith('Filename: '):
-            current_filename = line.split(': ')[1].strip()
-            sample_voted['File'].append(current_filename)
-        elif line.startswith('['):
-            # Clean line and just keep result1, result2, result3. Then split into list
-            clean_line = line.strip().replace('[', '').replace(']', '').replace("'", '').split(", ")
-            # Take majority vote
-            majority_vote_list.append((max(set(clean_line), key=clean_line.count)))
-        else:
-            pass
+    try:
+        with open(file_path, "r") as file:
+            for line in file:
+                process_line(line, sample_voted, majority_vote_list)
+    except Exception as e:
+        print(f"Error reading file: {e}")
+        return pd.DataFrame()  # Return an empty DataFrame on error
 
-    arrange_list = np.array(majority_vote_list).reshape(-1,3).tolist()
-    for sample in arrange_list:
-        if sample[0] in ['outdoor', 'indoor']:
-            sample_voted['Setting'].append(sample[0])
-        else:
-            sample_voted['Setting'].append('inconclusive')
-
-        if sample[1] in ['good', 'bad']:
-            sample_voted['Lighting'].append(sample[1])
-        else:
-            sample_voted['Lighting'].append('inconclusive')
-
-        if sample[2] in ['static', 'dynamic']:
-            sample_voted['Content Motion'].append(sample[2])
-        else:
-            sample_voted['Content Motion'].append('inconclusive')
+    arrange_list = np.array(majority_vote_list).reshape(-1, 3).tolist()
+    categorize_samples(arrange_list, sample_voted)
 
     return pd.DataFrame(sample_voted)
 
 sample_dataframe = create_dataframe('sampleresults.txt')
-sample_dataframe.to_pickle('samplevoted.pkl')
