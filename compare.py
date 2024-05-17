@@ -42,4 +42,7 @@ def create_dataframe(file_path):
 
     return pd.DataFrame(sample_voted)
 
-sample_dataframe = create_dataframe('sampleresults.txt')
+
+predictions = create_dataframe('sampleresults.txt')
+ground_truth = pd.read_csv('sampletruth.csv')
+print(predictions.to_string())

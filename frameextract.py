@@ -57,4 +57,3 @@ def extract_indexvideo_frames(start_n, end_n, path):
                 print(f'Video {video_count}, path:{current_vid_path} failed cap.read()')
 
 extract_frames(r"D:\ego4d\v2\full_scale\29a90a49-4137-4f81-b24d-2d923ab8fb55.mp4", 21)
-extract_indexvideo_frames()
