@@ -1,6 +1,8 @@
 import cv2
 import os
-
+from PIL import Image
+img = Image.open("test.png")
+clrs = img.getcolors()
 
 
 
@@ -29,7 +31,7 @@ def extract_frames(path, video_num):
 
 def extract_directory_frames(path, n):
     video_count = 0
-    videos = os.listdir(path)[1:n+1] #start at 1 to ignore manifest)
+    videos = os.listdir(path)[31:60] #start at 1 to ignore manifest)
     for video in videos:
         print(f'Starting Video {video}')
         timer_count = 0
@@ -46,13 +48,21 @@ def extract_directory_frames(path, n):
                         break
                     else:
                         frame_count += 1
-                        cv2.imwrite(f'frames/{video[:-4]}_{frame_count:04d}.jpg', frame)
+                        new_file_path = f'frames/{video[:-4]}_{frame_count:04d}.jpg'
+                        cv2.imwrite(new_file_path, frame)
                         timer_count += 600 # i.e. at 30 fps, this advances one second, currently every 20s
                         cap.set(cv2.CAP_PROP_POS_FRAMES, timer_count)
+
+                        # Check if image all black
+                        new_img = Image.open(new_file_path)
+                        if not new_img.getbbox():
+                            os.remove(new_file_path)
                 else:
                     cap.release()
                     break
             except:
                 print(f'Video {video_count}, path:{current_vid_path} failed cap.read()')
+
+
 
 extract_directory_frames(r"D:\ego4d\v2\full_scale", 30)

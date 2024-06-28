@@ -83,9 +83,9 @@ def query(image_path, model, tokenizer, prompt):
 directory_path = 'frames'
 scene_prompt = '<ImageHere> Please using only one word describe if the scene is outdoor or indoor.'
 lighting_prompt = '<ImageHere> Please using only one word describe if the lighting in the image is bad or good.'
-dynamic_prompt = '<ImageHere> Imagine we are trying to split images into categories where the objects and people are mostly static or dynamic, please answer with only one word static or dynamic for this image.'
+dynamic_prompt = '<ImageHere> Please using only one word static or dynamic answer if this image depicts any objects or people in motion? Assume that all people are in motion.'
 script_directory = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located
-data_frame = process_directory(directory_path, model, tokenizer, [scene_prompt, lighting_prompt, dynamic_prompt], 3)
-data_frame.to_pickle('results.pkl')
+data_frame = process_directory(directory_path, model, tokenizer, [scene_prompt, lighting_prompt, dynamic_prompt], 1)
+data_frame.to_pickle('resultsclean.pkl')
 
 
