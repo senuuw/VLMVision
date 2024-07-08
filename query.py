@@ -26,13 +26,14 @@ model = InternLMXComposer2QForCausalLM.from_quantized(
 tokenizer = AutoTokenizer.from_pretrained(
     'internlm/internlm-xcomposer2-vl-7b-4bit', trust_remote_code=True)
 
-def process_directory(directory, model, tokenizer, prompt_list, n):
+def process_directory(directory, model, tokenizer, prompt_list):
     # Dictionary that is turned into dataframe
     classification_dict = {
         'Filename': [],
         'Setting': [],
         'Lighting': [],
-        'Motion': [],
+        'People': [],
+        'Screens': [],
         'Blur': [],
         'Bright Spot': []
     }
@@ -41,12 +42,12 @@ def process_directory(directory, model, tokenizer, prompt_list, n):
         image_path = os.path.join(directory, file_name)
 
         # Query VLM for setting, lighting, motion and use OpenCV detection for blur and bright spot
-        setting_list, lighting_list, motion_list = process_imagenx(image_path, model, tokenizer, prompt_list, n)
+        setting, lighting, people, screens = process_imagenx(image_path, model, tokenizer, prompt_list)
         blur, bright_spot = detect_blur_and_bright_spot(image_path)
         keys = list(classification_dict.keys())
 
         # Add to dictionary
-        for i, classification in enumerate([file_name, setting_list, lighting_list, motion_list, blur, bright_spot]):
+        for i, classification in enumerate([file_name, setting, lighting, people, screens, blur, bright_spot]):
             classification_dict[keys[i]].append(classification)
         print(f"{file_name} done")
 
@@ -56,7 +57,7 @@ def process_directory(directory, model, tokenizer, prompt_list, n):
     return data_frame
 
 
-def process_imagenx(image_path, model, tokenizer, prompt_list, n):
+def process_imagenx(image_path, model, tokenizer, prompt_list):
     response_list = []
 
     # autocast() to ensure that all torch objects on GPU
@@ -64,28 +65,29 @@ def process_imagenx(image_path, model, tokenizer, prompt_list, n):
 
         # Choose prompt
         for current_prompt in prompt_list:
-            current_prompt_list = []
 
-            # n is the amount of times each prompt is asked
-            for i in range(n):
-                response = query(image_path, model, tokenizer, current_prompt)
-                current_prompt_list.append(response)
+            # Generate response and add to response list
+            response = query(image_path, model, tokenizer, current_prompt)
+            response_list.append(response)
 
-            response_list.append(current_prompt_list)
-    return response_list[0], response_list[1], response_list[2]
+    return response_list[0], response_list[1], response_list[2], response_list[3]
 
 
 def query(image_path, model, tokenizer, prompt):
-    response, _ = model.chat(tokenizer, query=prompt, image=image_path, history=[], do_sample=False) #do_sample=False for shorter responses)
+    # do_sample=False for shorter responses
+    response, _ = model.chat(tokenizer, query=prompt, image=image_path, history=[], do_sample=False)
     return response
 
 
 directory_path = 'frames'
 scene_prompt = '<ImageHere> Please using only one word describe if the scene is outdoor or indoor.'
 lighting_prompt = '<ImageHere> Please using only one word describe if the lighting in the image is bad or good.'
-dynamic_prompt = '<ImageHere> Please using only one word static or dynamic answer if this image depicts any objects or people in motion? Assume that all people are in motion.'
+people_prompt = '<ImageHere> Please using only one word reply with True or False if there are people or body parts present.'
+screen_prompt = ('<ImageHere> Please using only one word reply with True or False '
+                 'if there are any television/computer/phone screens o)n present.')
+
 script_directory = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located
-data_frame = process_directory(directory_path, model, tokenizer, [scene_prompt, lighting_prompt, dynamic_prompt], 1)
-data_frame.to_pickle('resultsclean.pkl')
+data_frame = process_directory(directory_path, model, tokenizer, [scene_prompt, lighting_prompt, people_prompt, screen_prompt])
+data_frame.to_pickle('results2.pkl')
 
 
