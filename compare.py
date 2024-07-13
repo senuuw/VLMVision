@@ -3,10 +3,11 @@ import numpy as np
 from sklearn.metrics import confusion_matrix
 
 # Load data and sort by 'Filename'
-df = pd.read_pickle('results2.pkl').sort_values(by=['Filename'])
-df_truth = pd.read_csv('frames_truth.csv').sort_values(by=['Filename'])
+df = pd.read_pickle('miscresults/results2.pkl').sort_values(by=['Filename'])
+df_truth = pd.read_csv('miscresults/frames_truth.csv').sort_values(by=['Filename'])
 
-# Replace string boolean values with actual boolean values
+# Replace string boolean values with actual boolean values\
+pd.set_option('future.no_silent_downcasting', True)
 df['Screens'] = df['Screens'].replace('False', False).replace('True', True)
 df['People'] = df['People'].replace('False', False).replace('True', True)
 
@@ -76,14 +77,5 @@ people_diff = compare.loc[~(compare[('People', 'self')] == compare[('People', 'o
 lighting_diff = compare.loc[~(compare[('Lighting', 'self')] == compare[('Lighting', 'other')])]
 screens_diff = compare.loc[~(compare[('Screens', 'self')] == compare[('Screens', 'other')])]
 
-# Refine the dataframe
-refinement_mask = (df['Blur'] < 1000) & (df['Bright Spot'] < 8000)
-refined_df = df[refinement_mask]
-refined_df_truth = df_truth[refinement_mask]
 
-print("+++++++++++++++++++++++++++++++++++++++")
-print('DATA FOR REMOVED BRIGHT SPOT AND BLUR')
-# Compare refined data
-df_compare(refined_df, refined_df_truth)
-count_differences(refined_df, refined_df_truth)
 pass

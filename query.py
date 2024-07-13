@@ -3,10 +3,10 @@ import torch, auto_gptq
 import pandas as pd
 from transformers import AutoModel, AutoTokenizer
 from auto_gptq.modeling import BaseGPTQForCausalLM
-from brightblur import detect_blur_and_bright_spot
+from helper import detect_blur_and_bright_spot
+
 auto_gptq.modeling._base.SUPPORTED_MODELS = ["internlm"]
 torch.set_grad_enabled(False)
-
 
 class InternLMXComposer2QForCausalLM(BaseGPTQForCausalLM):
     layers_block_name = "model.layers"
@@ -25,6 +25,26 @@ model = InternLMXComposer2QForCausalLM.from_quantized(
     'internlm/internlm-xcomposer2-vl-7b-4bit', trust_remote_code=True, device="cuda:0").eval()
 tokenizer = AutoTokenizer.from_pretrained(
     'internlm/internlm-xcomposer2-vl-7b-4bit', trust_remote_code=True)
+def process_imagenx(image_path, model, tokenizer, prompt_list):
+    response_list = []
+
+    # autocast() to ensure that all torch objects on GPU
+    with torch.cuda.amp.autocast():
+
+        # Choose prompt
+        for current_prompt in prompt_list:
+
+            # Generate response and add to response list
+            response = query(image_path, model, tokenizer, current_prompt)
+            response_list.append(response)
+
+    return response_list[0], response_list[1], response_list[2], response_list[3]
+
+
+def query(image_path, model, tokenizer, prompt):
+    # do_sample=False for shorter responses
+    response, _ = model.chat(tokenizer, query=prompt, image=image_path, history=[], do_sample=False)
+    return response
 
 def process_directory(directory, model, tokenizer, prompt_list):
     # Dictionary that is turned into dataframe
@@ -53,41 +73,26 @@ def process_directory(directory, model, tokenizer, prompt_list):
 
     # Convert to DataFrame with pandas
     data_frame = pd.DataFrame.from_dict(classification_dict)
-    print(data_frame)
     return data_frame
-
-
-def process_imagenx(image_path, model, tokenizer, prompt_list):
-    response_list = []
-
-    # autocast() to ensure that all torch objects on GPU
-    with torch.cuda.amp.autocast():
-
-        # Choose prompt
-        for current_prompt in prompt_list:
-
-            # Generate response and add to response list
-            response = query(image_path, model, tokenizer, current_prompt)
-            response_list.append(response)
-
-    return response_list[0], response_list[1], response_list[2], response_list[3]
-
-
-def query(image_path, model, tokenizer, prompt):
-    # do_sample=False for shorter responses
-    response, _ = model.chat(tokenizer, query=prompt, image=image_path, history=[], do_sample=False)
-    return response
-
 
 directory_path = 'frames'
 scene_prompt = '<ImageHere> Please using only one word describe if the scene is outdoor or indoor.'
 lighting_prompt = '<ImageHere> Please using only one word describe if the lighting in the image is bad or good.'
 people_prompt = '<ImageHere> Please using only one word reply with True or False if there are people or body parts present.'
 screen_prompt = ('<ImageHere> Please using only one word reply with True or False '
-                 'if there are any television/computer/phone screens o)n present.')
+                 'if there are any television/computer/phone screens on present.')
+prompt_list = [scene_prompt, lighting_prompt, people_prompt, screen_prompt]
+#script_directory = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located
+#data_frame = process_directory(directory_path, model, tokenizer, prompt_list)
+#data_frame.to_pickle('results2.pkl')
 
-script_directory = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located
-data_frame = process_directory(directory_path, model, tokenizer, [scene_prompt, lighting_prompt, people_prompt, screen_prompt])
-data_frame.to_pickle('results2.pkl')
+def process_video_frame_directory(video_frame_directory, model, tokenizer, prompt_list, pickle_output_folder):
+    video_frame_folders = os.listdir(video_frame_directory)
+    for video_folder in video_frame_folders:
+        folder_path = os.path.join(video_frame_directory, video_folder)
+        video_dataframe = process_directory(folder_path, model, tokenizer, prompt_list)
+        pickle_output = os.path.join(pickle_output_folder, video_folder)
+        video_dataframe.to_pickle(pickle_output + '.pkl')
+        print(f'{video_folder} Done')
 
-
+process_video_frame_directory('testvids_frames', model, tokenizer, prompt_list,'testvids_results')
