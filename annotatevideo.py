@@ -13,7 +13,7 @@ def annotate_video_with_classifications(video_path, segment_dict, output_path):
     fps = cap.get(cv2.CAP_PROP_FPS)
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     out = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
 
     frame_number = 0
@@ -67,11 +67,11 @@ def annotate_video_with_classifications_dataframe(video_path, pickle_path, outpu
 
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     out = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
 
     frame_number = 0
-    classification_interval = fps  # 30 frames per second
+    classification_interval = fps  # 30 52scenes per second
 
     while cap.isOpened():
         ret, frame = cap.read()

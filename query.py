@@ -75,7 +75,7 @@ def process_directory(directory, model, tokenizer, prompt_list):
     data_frame = pd.DataFrame.from_dict(classification_dict)
     return data_frame
 
-directory_path = 'frames'
+#directory_path = '52scenes'
 scene_prompt = '<ImageHere> Please using only one word describe if the scene is outdoor or indoor.'
 lighting_prompt = '<ImageHere> Please using only one word describe if the lighting in the image is bad or good.'
 people_prompt = '<ImageHere> Please using only one word reply with True or False if there are people or body parts present.'
@@ -86,13 +86,11 @@ prompt_list = [scene_prompt, lighting_prompt, people_prompt, screen_prompt]
 #data_frame = process_directory(directory_path, model, tokenizer, prompt_list)
 #data_frame.to_pickle('results2.pkl')
 
-def process_video_frame_directory(video_frame_directory, model, tokenizer, prompt_list, pickle_output_folder):
-    video_frame_folders = os.listdir(video_frame_directory)
+def process_frame_directory(frame_directory, model, tokenizer, prompt_list, results_directory):
+    video_frame_folders = os.listdir(frame_directory)
     for video_folder in video_frame_folders:
-        folder_path = os.path.join(video_frame_directory, video_folder)
+        folder_path = os.path.join(frame_directory, video_folder)
         video_dataframe = process_directory(folder_path, model, tokenizer, prompt_list)
-        pickle_output = os.path.join(pickle_output_folder, video_folder)
+        pickle_output = os.path.join(results_directory, video_folder)
         video_dataframe.to_pickle(pickle_output + '.pkl')
         print(f'{video_folder} Done')
-
-process_video_frame_directory('testvids_frames', model, tokenizer, prompt_list,'testvids_results')

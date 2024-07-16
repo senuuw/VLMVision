@@ -67,9 +67,11 @@ def count_differences(df, df_truth):
     print(f"All rows: {row_count}")
     print(f"Conflicts: {conflict_count}")
     print(f"Count: {count}")
+
+
 # Compare original data
-df_compare(df, df_truth)
-count_differences(df, df_truth)
+#df_compare(df, df_truth)
+#count_differences(df, df_truth)
 
 compare = df[['Filename', 'Setting', 'Lighting', 'People', 'Screens']].compare(df_truth[['Filename', 'Setting', 'Lighting', 'People', 'Screens']], keep_shape=True, keep_equal=True)
 setting_diff = compare.loc[~(compare[('Setting', 'self')] == compare[('Setting', 'other')])]

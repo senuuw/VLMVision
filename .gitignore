@@ -1,8 +1,9 @@
 /examples/
-/frames/
+/52scenes/
 /labeledvideos/
 /miscresults/
 /oldresults/
 /test_set/
+/indoorvids/
 /test_set_small/
 /.gitignore/

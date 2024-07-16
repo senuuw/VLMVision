@@ -133,4 +133,52 @@ def segment_block_folder(pickle_directory):
         for category in category_list:
             print(create_segment_blocks(segment_dict)[category])
 
+
+def filter_optimal_scenes(data_dict, n):
+    length = max([end for sublist in data_dict.values() for _, _, end in sublist]) + 1
+    criteria = {
+        'Setting': 'indoor',
+        'Lighting': 'good',
+        'People': False,
+        'Screens': False
+    }
+
+    valid_indices = set(range(length))
+
+    for key, value in criteria.items():
+        indices = set()
+        for val, start, end in data_dict[key]:
+            if val == value:
+                indices.update(range(start, end + 1))
+        valid_indices &= indices
+
+    valid_indices = sorted(valid_indices)
+
+    # Find consecutive sequences of at least length n
+    result = []
+    temp_sequence = []
+
+    for i in range(len(valid_indices)):
+        if not temp_sequence or valid_indices[i] == temp_sequence[-1] + 1:
+            temp_sequence.append(valid_indices[i])
+        else:
+            if len(temp_sequence) >= n:
+                result.append(temp_sequence)
+            temp_sequence = [valid_indices[i]]
+
+    if len(temp_sequence) >= n:
+        result.append(temp_sequence)
+
+    return result
+
+
+
+indoor_results_paths = os.listdir('indoorvids/indoorvidresults')
+for path in indoor_results_paths:
+    result_path = os.path.join('indoorvids/indoorvidresults', path)
+    segment_dict = classify_segments(result_path, 5)
+    segment_blocks = create_segment_blocks(segment_dict)
+    filtered = filter_optimal_scenes(segment_blocks,10)
+    print(path)
+    print(filtered)
 #segment_block_folder('testvids_results')
