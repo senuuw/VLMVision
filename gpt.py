@@ -1,6 +1,7 @@
 import torch, auto_gptq
 from transformers import AutoModel, AutoTokenizer
 from auto_gptq.modeling import BaseGPTQForCausalLM
+import os
 
 auto_gptq.modeling._base.SUPPORTED_MODELS = ["internlm"]
 torch.set_grad_enabled(False)
