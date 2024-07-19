@@ -1,4 +1,5 @@
-import torch, auto_gptq
+import pytorch as torch
+import auto_gptq
 from transformers import AutoModel, AutoTokenizer
 from auto_gptq.modeling import BaseGPTQForCausalLM
 
