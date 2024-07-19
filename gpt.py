@@ -35,6 +35,6 @@ prompt_list = [scene_prompt, lighting_prompt, people_prompt, screen_prompt]
 ego4d_path = '/home/sebastian/extssd/ego4d/v2/full_scale'
 def main(ego4_path):
     video_list = os.listdir(ego4_path)[1:10]
-    for video_name in video_list:s
+    for video_name in video_list:
         video_path = os.path.join(ego4_path, video_name)
         print(video_path)
