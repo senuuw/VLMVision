@@ -2,7 +2,8 @@ import torch, auto_gptq
 from transformers import AutoModel, AutoTokenizer
 from auto_gptq.modeling import BaseGPTQForCausalLM
 import os
-
+from query import process_frame_directory
+from frameextract import extract_video_frames
 auto_gptq.modeling._base.SUPPORTED_MODELS = ["internlm"]
 torch.set_grad_enabled(False)
 
@@ -24,9 +25,16 @@ model = InternLMXComposer2QForCausalLM.from_quantized(
 tokenizer = AutoTokenizer.from_pretrained(
     'internlm/internlm-xcomposer2-vl-7b-4bit', trust_remote_code=True)
 
+scene_prompt = '<ImageHere> Please using only one word describe if the scene is outdoor or indoor.'
+lighting_prompt = '<ImageHere> Please using only one word describe if the lighting in the image is bad or good.'
+people_prompt = '<ImageHere> Please using only one word reply with True or False if there are people or body parts present.'
+screen_prompt = ('<ImageHere> Please using only one word reply with True or False '
+                 'if there are any television/computer/phone screens on present.')
+prompt_list = [scene_prompt, lighting_prompt, people_prompt, screen_prompt]
 
-text = '<ImageHere>Please describe this image in detail.'
-image = 'test1.png'
-with torch.cuda.amp.autocast():
-  response, _ = model.chat(tokenizer, query=text, image=image, history=[], do_sample=False)
-print(response)
+ego4d_path = '/home/sebastian/extssd/ego4d/v2/full_scale'
+def main(ego4_path):
+    video_list = os.listdir(ego4_path)[1:10]
+    for video_name in video_list:s
+        video_path = os.path.join(ego4_path, video_name)
+        print(video_path)
