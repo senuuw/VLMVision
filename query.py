@@ -7,24 +7,24 @@ from helper import detect_blur_and_bright_spot
 
 auto_gptq.modeling._base.SUPPORTED_MODELS = ["internlm"]
 torch.set_grad_enabled(False)
+if __name__ == '__main__':
+    class InternLMXComposer2QForCausalLM(BaseGPTQForCausalLM):
+        layers_block_name = "model.layers"
+        outside_layer_modules = [
+            'vit', 'vision_proj', 'model.tok_embeddings', 'model.norm', 'output',
+        ]
+        inside_layer_modules = [
+            ["attention.wqkv.linear"],
+            ["attention.wo.linear"],
+            ["feed_forward.w1.linear", "feed_forward.w3.linear"],
+            ["feed_forward.w2.linear"],
+        ]
 
-class InternLMXComposer2QForCausalLM(BaseGPTQForCausalLM):
-    layers_block_name = "model.layers"
-    outside_layer_modules = [
-        'vit', 'vision_proj', 'model.tok_embeddings', 'model.norm', 'output',
-    ]
-    inside_layer_modules = [
-        ["attention.wqkv.linear"],
-        ["attention.wo.linear"],
-        ["feed_forward.w1.linear", "feed_forward.w3.linear"],
-        ["feed_forward.w2.linear"],
-    ]
-
-# init model and tokenizer
-model = InternLMXComposer2QForCausalLM.from_quantized(
-    'internlm/internlm-xcomposer2-vl-7b-4bit', trust_remote_code=True, device="cuda:0").eval()
-tokenizer = AutoTokenizer.from_pretrained(
-    'internlm/internlm-xcomposer2-vl-7b-4bit', trust_remote_code=True)
+    # init model and tokenizer
+    model = InternLMXComposer2QForCausalLM.from_quantized(
+        'internlm/internlm-xcomposer2-vl-7b-4bit', trust_remote_code=True, device="cuda:0").eval()
+    tokenizer = AutoTokenizer.from_pretrained(
+        'internlm/internlm-xcomposer2-vl-7b-4bit', trust_remote_code=True)
 def process_imagenx(image_path, model, tokenizer, prompt_list):
     response_list = []
 
@@ -91,6 +91,6 @@ def process_frame_directory(frame_directory, model, tokenizer, prompt_list, resu
     for video_folder in video_frame_folders:
         folder_path = os.path.join(frame_directory, video_folder)
         video_dataframe = process_directory(folder_path, model, tokenizer, prompt_list)
-        pickle_output = os.path.join(results_directory, video_folder)
+        pickle_output = os.path.join(results_directory, frame_directory)
         video_dataframe.to_pickle(pickle_output + '.pkl')
         print(f'{video_folder} Done')

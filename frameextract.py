@@ -68,8 +68,6 @@ def extract_video_frames(video_path, output_directory, frames_captured_per_secon
         new_img = Image.open(frame_path)
         if not new_img.getbbox():
             os.remove(frame_path)
+    print(f"Extracted {frame_count} frames to {video_output_directory}")
+    return video_output_directory
 
-        if frame_count == 120:
-            cap.release()
-            print(f"Extracted {frame_count} frames to {video_output_directory}")
-            break
