@@ -68,7 +68,7 @@ def main(video_directory, frame_directory, results_directory, model, tokenizer, 
             print(f"Video {video_name} already completed")
         else:
             start = time.time()
-            video_path = os.path.join(video_name, video_directory)
+            video_path = os.path.join(video_directory, video_name)
             # Extract 1 frame per second to frame_directory and return video frame directory path
             # Will print "Extracted {frame_count} frames to {video_frame_directory}"
             video_frame_directory = extract_video_frames(video_path, frame_directory, 1)
