@@ -45,6 +45,18 @@ def main(video_directory, frame_directory, results_directory, model, tokenizer, 
     video_name_list = os.listdir(video_directory)[1:]
     #Get full list of videos with results alredy
     completed_video_name_list = os.listdir(results_directory)
+    if os.path.exists(frame_directory):
+        print('Frame directory exists already')
+    else:
+        os.mkdir(frame_directory)
+        print(f'Creating new frame directory at {frame_directory}')
+
+    if os.path.exists(results_directory):
+        print('Results directory exists already')
+    else:
+        os.mkdir(results_directory)
+        print(f'Creating new results directory at {results_directory}')
+
     video_count = 0
     for video_name in video_name_list:
         if f"{video_name}.pkl" in completed_video_name_list:
@@ -67,4 +79,8 @@ def main(video_directory, frame_directory, results_directory, model, tokenizer, 
             end = time.time()
             print(f'Added {video_name} to results directory, Video #{video_count} completed in {end - start:.2f}')
             os.remove(video_frame_directory)
-main()
+
+video_directory = "/home/sebastian/extssd/ego4d/v2/full_scale"
+frame_directory = "/home/sebastian/VLMVision/ego4d/frames"
+results_directory = "/home/sebastian/VLMVision/ego4d/results"
+main(video_directory, frame_directory, results_directory, model, tokenizer, prompt_list)
