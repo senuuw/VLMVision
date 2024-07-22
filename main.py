@@ -45,6 +45,7 @@ def main(video_directory, frame_directory, results_directory, model, tokenizer, 
     video_name_list = os.listdir(video_directory)[1:]
 
     #Create or use existing frame and results directories
+    os.mkdir('/home/sebastian/VLMVision/ego4d')
     if os.path.exists(frame_directory):
         print('Frame directory exists already')
     else:
