@@ -88,7 +88,7 @@ prompt_list = [scene_prompt, lighting_prompt, people_prompt, screen_prompt]
 #data_frame.to_pickle('results2.pkl')
 
 def process_frame_directory(frame_directory, model, tokenizer, prompt_list, results_directory):
-    video_frame_folders = os.listdir(frame_directory)
+    video_frame_folders = os.listdir(frame_directory)[5:]
     for video_folder in video_frame_folders:
         folder_path = os.path.join(frame_directory, video_folder)
         video_dataframe = process_directory(folder_path, model, tokenizer, prompt_list)
