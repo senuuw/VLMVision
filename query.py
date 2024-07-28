@@ -58,7 +58,8 @@ def process_directory(directory, model, tokenizer, prompt_list):
         'Bright Spot': []
     }
     files_in_order = sorted(os.listdir(directory))
-    print(files_in_order)
+    amount_of_files = len(files_in_order)
+    count = 0
     for file_name in files_in_order:
         image_path = os.path.join(directory, file_name)
 
@@ -70,7 +71,8 @@ def process_directory(directory, model, tokenizer, prompt_list):
         # Add to dictionary
         for i, classification in enumerate([file_name, setting, lighting, people, screens, blur, bright_spot]):
             classification_dict[keys[i]].append(classification)
-        print(f"{file_name} done")
+        count+=1
+        print(f"{file_name} done [{count}/{amount_of_files}] {(count/amount_of_files)*100:.2f}%")
 
     # Convert to DataFrame with pandas
     data_frame = pd.DataFrame.from_dict(classification_dict)
