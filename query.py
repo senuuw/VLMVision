@@ -57,8 +57,9 @@ def process_directory(directory, model, tokenizer, prompt_list):
         'Blur': [],
         'Bright Spot': []
     }
-
-    for file_name in sorted(os.listdir(directory)):
+    files_in_order = sorted(os.listdir(directory))
+    print(files_in_order)
+    for file_name in files_in_order:
         image_path = os.path.join(directory, file_name)
 
         # Query VLM for setting, lighting, motion and use OpenCV detection for blur and bright spot
@@ -94,3 +95,5 @@ def process_frame_directory(frame_directory, model, tokenizer, prompt_list, resu
         pickle_output = os.path.join(results_directory, frame_directory)
         video_dataframe.to_pickle(pickle_output + '.pkl')
         print(f'{video_folder} Done')
+
+process_directory("home/sebastian/VLMVision/ego4d/frames/77cc4654-4eec-44c6-af05-dbdf71f9a40100", model , tokenizer, prompt_list)
