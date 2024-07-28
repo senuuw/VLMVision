@@ -57,7 +57,7 @@ def main(video_directory, frame_directory, results_directory, model, tokenizer, 
         os.mkdir(results_directory)
         print(f'Creating new results directory at {results_directory}')
 
-    # Get full list of videos with results alredy
+    # Get full list of videos with results already
     completed_video_name_list = os.listdir(results_directory)
 
     video_count = 0
@@ -68,10 +68,14 @@ def main(video_directory, frame_directory, results_directory, model, tokenizer, 
         else:
             start = time.time()
             video_path = os.path.join(video_directory, video_name)
+            print("video_path")
+            print(video_path)
+            pickle_output_path = os.path.join(results_directory, video_name, '.pkl')
+            print('pickle_output_path')
+            print(pickle_output_path)
             # Extract 1 frame per second to frame_directory and return video frame directory path
             # Will print "Extracted {frame_count} frames to {video_frame_directory}"
             video_frame_directory = extract_video_frames(video_path, frame_directory, 1)
-
             # Process and create dataframe for video frames, return dataframe
             # Prints done for every frame (to be removed after testing)
             video_dataframe = process_directory(video_frame_directory, model, tokenizer, prompt_list)

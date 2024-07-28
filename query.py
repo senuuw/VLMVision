@@ -58,7 +58,7 @@ def process_directory(directory, model, tokenizer, prompt_list):
         'Bright Spot': []
     }
 
-    for file_name in os.listdir(directory):
+    for file_name in sorted(os.listdir(directory)):
         image_path = os.path.join(directory, file_name)
 
         # Query VLM for setting, lighting, motion and use OpenCV detection for blur and bright spot
