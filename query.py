@@ -96,4 +96,4 @@ def process_frame_directory(frame_directory, model, tokenizer, prompt_list, resu
         video_dataframe.to_pickle(pickle_output + '.pkl')
         print(f'{video_folder} Done')
 
-process_directory("home/sebastian/VLMVision/ego4d/frames/77cc4654-4eec-44c6-af05-dbdf71f9a40100", model , tokenizer, prompt_list)
+process_directory("home/sebastian/VLMVision/ego4d/frames/77cc4654-4eec-44c6-af05-dbdf71f9a401", model , tokenizer, prompt_list)
