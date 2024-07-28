@@ -88,12 +88,10 @@ prompt_list = [scene_prompt, lighting_prompt, people_prompt, screen_prompt]
 #data_frame.to_pickle('results2.pkl')
 
 def process_frame_directory(frame_directory, model, tokenizer, prompt_list, results_directory):
-    video_frame_folders = os.listdir(frame_directory)[5:]
+    video_frame_folders = os.listdir(frame_directory)
     for video_folder in video_frame_folders:
         folder_path = os.path.join(frame_directory, video_folder)
         video_dataframe = process_directory(folder_path, model, tokenizer, prompt_list)
         pickle_output = os.path.join(results_directory, frame_directory)
         video_dataframe.to_pickle(pickle_output + '.pkl')
         print(f'{video_folder} Done')
-
-process_directory("/home/sebastian/VLMVision/ego4d/frames/77cc4654-4eec-44c6-af05-dbdf71f9a401", model , tokenizer, prompt_list)
