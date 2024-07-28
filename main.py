@@ -70,7 +70,10 @@ def main(video_directory, frame_directory, results_directory, model, tokenizer, 
             video_path = os.path.join(video_directory, video_name)
             print("video_path")
             print(video_path)
-            pickle_output_path = os.path.join(results_directory, video_name, '.pkl')
+            video_name = os.path.splitext(os.path.basename(video_path))[0]
+            print('vidoe_name')
+            print(video_name)
+            pickle_output_path = os.path.join(results_directory, f"{video_name}.pkl")
             print('pickle_output_path')
             print(pickle_output_path)
             # Extract 1 frame per second to frame_directory and return video frame directory path
