@@ -82,7 +82,7 @@ def main(video_directory, frame_directory, results_directory, model, tokenizer, 
             video_count += 1
             end = time.time()
             print(f'Added {video_name} to results directory, Video #{video_count} completed in {end - start:.2f}')
-            os.remove(video_frame_directory)
+            os.rmdir(video_frame_directory)
 
 video_directory = "/home/sebastian/extssd/ego4d/v2/full_scale"
 frame_directory = "/home/sebastian/VLMVision/ego4d/frames"
