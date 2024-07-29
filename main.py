@@ -64,7 +64,8 @@ def main(video_directory, frame_directory, results_directory, model, tokenizer, 
     video_count = 0
 
     for video_name in video_name_list:
-        if f"{video_name}.pkl" in completed_video_name_list:
+
+        if f"{video_name[:-4]}.pkl" in completed_video_name_list:
             print(f"Video {video_name} already completed")
         else:
             start = time.time()
