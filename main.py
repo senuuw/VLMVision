@@ -42,8 +42,8 @@ prompt_list = [scene_prompt, lighting_prompt, people_prompt, screen_prompt]
 
 
 def main(video_directory, frame_directory, results_directory, model, tokenizer, prompt_list):
-    #Get full list of video names
-    video_name_list = os.listdir(video_directory)[2:]
+    #Get full list of video names, skip first two already done and manifest
+    video_name_list = os.listdir(video_directory)[3:]
 
     #Create or use existing frame and results directories
     if os.path.exists(frame_directory):
