@@ -5,6 +5,7 @@ from auto_gptq.modeling import BaseGPTQForCausalLM
 from query import process_directory
 from frameextract import extract_video_frames
 import time
+import shutil
 
 auto_gptq.modeling._base.SUPPORTED_MODELS = ["internlm"]
 torch.set_grad_enabled(False)
@@ -82,7 +83,7 @@ def main(video_directory, frame_directory, results_directory, model, tokenizer, 
             video_count += 1
             end = time.time()
             print(f'Added {video_name} to results directory, Video #{video_count} completed in {(end - start)/3600:.2f} hours')
-            os.rmdir(video_frame_directory)
+            shutil.rmtree(video_frame_directory, ignore_errors=True)
 
 video_directory = "/home/sebastian/extssd/ego4d/v2/full_scale"
 frame_directory = "/home/sebastian/VLMVision/ego4d/frames"
