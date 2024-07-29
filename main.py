@@ -4,6 +4,7 @@ from transformers import AutoModel, AutoTokenizer
 from auto_gptq.modeling import BaseGPTQForCausalLM
 from query import process_directory
 from frameextract import extract_video_frames
+from helper import get_video_length
 import time
 import shutil
 
@@ -43,7 +44,7 @@ prompt_list = [scene_prompt, lighting_prompt, people_prompt, screen_prompt]
 
 def main(video_directory, frame_directory, results_directory, model, tokenizer, prompt_list):
     #Get full list of video names, skip first two already done and manifest
-    video_name_list = os.listdir(video_directory)[3:]
+    video_name_list = os.listdir(video_directory)[10:]
 
     #Create or use existing frame and results directories
     if os.path.exists(frame_directory):
@@ -64,14 +65,14 @@ def main(video_directory, frame_directory, results_directory, model, tokenizer, 
     video_count = 0
 
     for video_name in video_name_list:
-
-        if f"{video_name[:-4]}.pkl" in completed_video_name_list:
-            print(f"Video {video_name} already completed")
+        video_path = os.path.join(video_directory, video_name)
+        if get_video_length(video_path) > 600:
+            print(f"Video {video_name} more than 10 minutes, skipping")
         else:
             start = time.time()
-            video_path = os.path.join(video_directory, video_name)
             # Extract 1 frame per second to frame_directory and return video frame directory path
             # Will print "Extracted {frame_count} frames to {video_frame_directory}"
+            print(f"Staring {video_name} with length {get_video_length(video_path)/60} minutes")
             video_frame_directory = extract_video_frames(video_path, frame_directory, 1)
             # Process and create dataframe for video frames, return dataframe
             # Prints done for every frame (to be removed after testing)

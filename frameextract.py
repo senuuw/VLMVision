@@ -60,7 +60,7 @@ def extract_video_frames(video_path, output_directory, frames_captured_per_secon
         if not ret:
             break
         frame_count += 1
-        frame_path = os.path.join(video_output_directory, f"{video_name}_{frame_count:04d}.jpg")
+        frame_path = os.path.join(video_output_directory, f"{video_name}_{frame_count:05d}.jpg")
         cv2.imwrite(frame_path, frame)
         timer_count += fps / frames_captured_per_second # advances 52scenes
         cap.set(cv2.CAP_PROP_POS_FRAMES, timer_count)

@@ -26,3 +26,26 @@ def calculate_exposure_percentages(image_path, threshold=10):
 
     return under_percentage, over_percentage
 
+
+def get_video_length(file_path):
+    try:
+        cap = cv2.VideoCapture(file_path)
+        if not cap.isOpened():
+            print("Error opening video file")
+            return None
+
+        # Get frame rate and total frame count
+        fps = cap.get(cv2.CAP_PROP_FPS)
+        frame_count = cap.get(cv2.CAP_PROP_FRAME_COUNT)
+
+        if fps > 0 and frame_count > 0:
+            duration = frame_count / fps
+            return duration
+        else:
+            return None
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
+    finally:
+        cap.release()
+
