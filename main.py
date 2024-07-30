@@ -96,6 +96,13 @@ video_chunks = split_list(video_name_list, 2)
 
 processes = []
 
+scene_prompt = '<ImageHere> Please using only one word describe if the scene is outdoor or indoor.'
+lighting_prompt = '<ImageHere> Please using only one word describe if the lighting in the image is bad or good.'
+people_prompt = '<ImageHere> Please using only one word reply with True or False if there are people or body parts present.'
+screen_prompt = ('<ImageHere> Please using only one word reply with True or False '
+                 'if there are any television/computer/phone screens on present.')
+prompt_list = [scene_prompt, lighting_prompt, people_prompt, screen_prompt]
+
 for i, video_chunk in enumerate(video_chunks):
     device = get_device(i)
     model, tokenizer = initialize_model(device)
