@@ -1,5 +1,6 @@
 import os
-import torch, auto_gptq
+import torch
+import auto_gptq
 from transformers import AutoModel, AutoTokenizer
 from auto_gptq.modeling import BaseGPTQForCausalLM
 from query import process_directory
@@ -7,6 +8,7 @@ from frameextract import extract_video_frames
 from helper import get_video_length
 import time
 import shutil
+from multiprocessing import Process
 
 auto_gptq.modeling._base.SUPPORTED_MODELS = ["internlm"]
 torch.set_grad_enabled(False)
@@ -25,34 +27,24 @@ class InternLMXComposer2QForCausalLM(BaseGPTQForCausalLM):
     ]
 
 
-# init model and tokenizer
-model = InternLMXComposer2QForCausalLM.from_quantized(
-    'internlm/internlm-xcomposer2-vl-7b-4bit', trust_remote_code=True, device="cuda:0").eval()
-tokenizer = AutoTokenizer.from_pretrained(
-    'internlm/internlm-xcomposer2-vl-7b-4bit', trust_remote_code=True)
+def get_device(gpu_id):
+    if torch.cuda.is_available():
+        return torch.device(f"cuda:{gpu_id}")
+    else:
+        return torch.device("cpu")
 
-text = '<ImageHere>Please describe this image in detail.'
 
-scene_prompt = '<ImageHere> Please using only one word describe if the scene is outdoor or indoor.'
-lighting_prompt = '<ImageHere> Please using only one word describe if the lighting in the image is bad or good.'
-people_prompt = '<ImageHere> Please using only one word reply with True or False if there are people or body parts present.'
-screen_prompt = ('<ImageHere> Please using only one word reply with True or False '
-                 'if there are any television/computer/phone screens on present.')
+def initialize_model(device):
+    model = InternLMXComposer2QForCausalLM.from_quantized(
+        'internlm/internlm-xcomposer2-vl-7b-4bit', trust_remote_code=True, device=device).eval()
+    tokenizer = AutoTokenizer.from_pretrained(
+        'internlm/internlm-xcomposer2-vl-7b-4bit', trust_remote_code=True)
+    return model, tokenizer
 
-prompt_list = [scene_prompt, lighting_prompt, people_prompt, screen_prompt]
 
-def main(video_directory, frame_directory, results_directory, model, tokenizer, prompt_list):
-    # Get full list of video names, skip first two already done and manifest
-    video_name_list = os.listdir(video_directory)[2:]
-
-    # Create or use existing frame and results directories
-    os.makedirs(frame_directory, exist_ok=True)
-    os.makedirs(results_directory, exist_ok=True)
-
-    completed_video_name_list = os.listdir(results_directory)
-    video_count = 0
-
-    for video_name_mp4 in video_name_list:
+def process_videos(video_list, frame_directory, results_directory, model, tokenizer, prompt_list, device):
+    model.to(device)
+    for video_name_mp4 in video_list:
         # Skip the specific problematic file
         if video_name_mp4 == "c3f5972e-9919-496c-a01a-75ffa5c7bcff.mp4":
             print(f"Skipping problematic video file: {video_name_mp4}")
@@ -78,15 +70,40 @@ def main(video_directory, frame_directory, results_directory, model, tokenizer, 
             video_dataframe = process_directory(video_frame_directory, model, tokenizer, prompt_list)
             pickle_output_path = os.path.join(results_directory, pickle_file_name)
             video_dataframe.to_pickle(pickle_output_path)
-            video_count += 1
-            print(f'Added {pickle_file_name} to results directory, Video #{video_count} completed in {(time.time() - start) / 3600:.2f} hours')
+            print(
+                f'Added {pickle_file_name} to results directory, completed in {(time.time() - start) / 3600:.2f} hours')
         except Exception as e:
             print(f"Error processing video {video_name_mp4}: {e}")
         finally:
             shutil.rmtree(video_frame_directory, ignore_errors=True)
 
 
+def split_list(lst, n):
+    k, m = divmod(len(lst), n)
+    return [lst[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(n)]
+
+
 video_directory = "/home/sebastian/extssd/ego4d/v2/full_scale"
 frame_directory = "/home/sebastian/VLMVision/ego4d/frames"
 results_directory = "/home/sebastian/VLMVision/ego4d/results"
-main(video_directory, frame_directory, results_directory, model, tokenizer, prompt_list)
+
+# Get full list of video names, skip first two already done and manifest
+video_name_list = os.listdir(video_directory)[2:]
+completed_video_name_list = os.listdir(results_directory)
+
+# Split the video list between the two GPUs
+video_chunks = split_list(video_name_list, 2)
+
+processes = []
+
+for i, video_chunk in enumerate(video_chunks):
+    device = get_device(i)
+    model, tokenizer = initialize_model(device)
+
+    p = Process(target=process_videos,
+                args=(video_chunk, frame_directory, results_directory, model, tokenizer, prompt_list, device))
+    processes.append(p)
+    p.start()
+
+for p in processes:
+    p.join()
