@@ -1,4 +1,5 @@
 import os
+import sys
 import torch
 import auto_gptq
 from transformers import AutoModel, AutoTokenizer
@@ -8,7 +9,6 @@ from frameextract import extract_video_frames
 from helper import get_video_length
 import time
 import shutil
-from multiprocessing import Process, set_start_method
 
 auto_gptq.modeling._base.SUPPORTED_MODELS = ["internlm"]
 torch.set_grad_enabled(False)
@@ -26,13 +26,11 @@ class InternLMXComposer2QForCausalLM(BaseGPTQForCausalLM):
         ["feed_forward.w2.linear"],
     ]
 
-
 def get_device(gpu_id):
     if torch.cuda.is_available():
         return torch.device(f"cuda:{gpu_id}")
     else:
         return torch.device("cpu")
-
 
 def initialize_model(device):
     model = InternLMXComposer2QForCausalLM.from_quantized(
@@ -41,9 +39,7 @@ def initialize_model(device):
         'internlm/internlm-xcomposer2-vl-7b-4bit', trust_remote_code=True)
     return model, tokenizer
 
-
-def process_videos(video_directory, video_list, frame_directory, results_directory, model, tokenizer, prompt_list,
-                   device, completed_video_name_list):
+def process_videos(video_directory, video_list, frame_directory, results_directory, model, tokenizer, prompt_list, device, completed_video_name_list):
     model.to(device)
     for video_name_mp4 in video_list:
         # Skip the specific problematic file
@@ -71,24 +67,22 @@ def process_videos(video_directory, video_list, frame_directory, results_directo
             video_dataframe = process_directory(video_frame_directory, model, tokenizer, prompt_list)
             pickle_output_path = os.path.join(results_directory, pickle_file_name)
             video_dataframe.to_pickle(pickle_output_path)
-            print(
-                f'Added {pickle_file_name} to results directory, completed in {(time.time() - start) / 3600:.2f} hours')
+            print(f'Added {pickle_file_name} to results directory, completed in {(time.time() - start) / 3600:.2f} hours')
         except Exception as e:
             print(f"Error processing video {video_name_mp4}: {e}")
         finally:
             shutil.rmtree(video_frame_directory, ignore_errors=True)
 
-
 def split_list(lst, n):
     k, m = divmod(len(lst), n)
-    return [lst[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(n)]
-
+    return [lst[i*k + min(i, m):(i+1)*k + min(i+1, m)] for i in range(n)]
 
 if __name__ == '__main__':
-    try:
-        set_start_method('spawn')
-    except RuntimeError:
-        pass  # Start method is already set
+    if len(sys.argv) != 2:
+        print("Usage: python main.py <gpu_id>")
+        sys.exit(1)
+
+    gpu_id = int(sys.argv[1])
 
     video_directory = "/home/sebastian/extssd/ego4d/v2/full_scale"
     frame_directory = "/home/sebastian/VLMVision/ego4d/frames"
@@ -106,20 +100,13 @@ if __name__ == '__main__':
     video_name_list = os.listdir(video_directory)[2:]
     completed_video_name_list = os.listdir(results_directory)
 
-    # Split the video list between the two GPUs
+    # Split the video list into two chunks
     video_chunks = split_list(video_name_list, 2)
 
-    processes = []
+    # Select the chunk based on GPU ID
+    video_chunk = video_chunks[gpu_id]
 
-    for i, video_chunk in enumerate(video_chunks):
-        device = get_device(i)
-        model, tokenizer = initialize_model(device)
+    device = get_device(gpu_id)
+    model, tokenizer = initialize_model(device)
 
-        p = Process(target=process_videos, args=(
-        video_directory, video_chunk, frame_directory, results_directory, model, tokenizer, prompt_list, device,
-        completed_video_name_list))
-        processes.append(p)
-        p.start()
-
-    for p in processes:
-        p.join()
+    process_videos(video_directory, video_chunk, frame_directory, results_directory, model, tokenizer, prompt_list, device, completed_video_name_list)
