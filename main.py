@@ -42,9 +42,9 @@ def initialize_model(device):
     return model, tokenizer
 
 
-def process_videos(video_directory, frame_directory, results_directory, model, tokenizer, prompt_list, device):
+def process_videos(video_list, frame_directory, results_directory, model, tokenizer, prompt_list, device):
     model.to(device)
-    for video_name_mp4 in video_directory:
+    for video_name_mp4 in video_list:
         # Skip the specific problematic file
         if video_name_mp4 == "c3f5972e-9919-496c-a01a-75ffa5c7bcff.mp4":
             print(f"Skipping problematic video file: {video_name_mp4}")
