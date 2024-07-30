@@ -164,13 +164,17 @@ def filter_optimal_scenes(data_dict, n):
 
     return result
 
+def show_filtered_blocks(directory_path, window_size , min_length):
+    directory_path = '/home/sebastian/VLMVision/ego4d/results'
+    indoor_results_paths = os.listdir(directory_path)
+    for path in indoor_results_paths:
+        result_path = os.path.join(directory_path, path)
+        segment_dict = classify_segments(result_path, window_size)
+        segment_blocks = create_segment_blocks(segment_dict)
+        filtered = filter_optimal_scenes(segment_blocks, 1)
+        print(path)
+        print(filtered)
 
 directory_path = '/home/sebastian/VLMVision/ego4d/results'
-indoor_results_paths = os.listdir(directory_path)
-for path in indoor_results_paths:
-    result_path = os.path.join(directory_path, path)
-    segment_dict = classify_segments(result_path, 5)
-    segment_blocks = create_segment_blocks(segment_dict)
-    filtered = filter_optimal_scenes(segment_blocks,10)
-    print(path)
-    print(filtered)
+
+show_filtered_blocks(directory_path, 5, 1)
