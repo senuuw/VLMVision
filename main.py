@@ -43,7 +43,7 @@ def process_videos(video_directory, video_list, frame_directory, results_directo
     model.to(device)
     for video_name_mp4 in video_list:
         # Skip the specific problematic file
-        if video_name_mp4 == "c3f5972e-9919-496c-a01a-75ffa5c7bcff.mp4":
+        if video_name_mp4 in ["f4c4c22e-2719-4897-87a8-bb754903eb01.mp4", "c3f5972e-9919-496c-a01a-75ffa5c7bcff.mp4"]:
             print(f"Skipping problematic video file: {video_name_mp4}")
             continue
 
