@@ -44,7 +44,7 @@ prompt_list = [scene_prompt, lighting_prompt, people_prompt, screen_prompt]
 
 def main(video_directory, frame_directory, results_directory, model, tokenizer, prompt_list):
     #Get full list of video names, skip first two already done and manifest
-    video_name_list = os.listdir(video_directory)[10:]
+    video_name_list = os.listdir(video_directory)[1:]
 
     #Create or use existing frame and results directories
     if os.path.exists(frame_directory):
@@ -64,28 +64,31 @@ def main(video_directory, frame_directory, results_directory, model, tokenizer, 
 
     video_count = 0
 
-    for video_name in video_name_list:
-        video_path = os.path.join(video_directory, video_name)
-        if get_video_length(video_path) > 600:
-            print(f"Video {video_name} more than 10 minutes, skipping")
+    for video_name_mp4 in video_name_list:
+        video_path = os.path.join(video_directory, video_name_mp4)
+        if f"{video_name_mp4[:-4]}.pkl" in results_directory:
+            print(f"Video {video_name_mp4} already done, skipping")
         else:
-            start = time.time()
-            # Extract 1 frame per second to frame_directory and return video frame directory path
-            # Will print "Extracted {frame_count} frames to {video_frame_directory}"
-            print(f"Staring {video_name} with length {get_video_length(video_path)/60} minutes")
-            video_frame_directory = extract_video_frames(video_path, frame_directory, 1)
-            # Process and create dataframe for video frames, return dataframe
-            # Prints done for every frame (to be removed after testing)
-            video_dataframe = process_directory(video_frame_directory, model, tokenizer, prompt_list)
+            if get_video_length(video_path) > 600:
+                print(f"Video {video_name_mp4} more than 10 minutes, skipping")
+            else:
+                start = time.time()
+                # Extract 1 frame per second to frame_directory and return video frame directory path
+                # Will print "Extracted {frame_count} frames to {video_frame_directory}"
+                print(f"Staring {video_name_mp4} with length {get_video_length(video_path)/60} minutes")
+                video_frame_directory = extract_video_frames(video_path, frame_directory, 1)
+                # Process and create dataframe for video frames, return dataframe
+                # Prints done for every frame (to be removed after testing)
+                video_dataframe = process_directory(video_frame_directory, model, tokenizer, prompt_list)
 
-            #Save dataframe in pickle
-            video_name = os.path.splitext(os.path.basename(video_path))[0]
-            pickle_output_path = os.path.join(results_directory, f"{video_name}.pkl")
-            video_dataframe.to_pickle(pickle_output_path)
-            video_count += 1
-            end = time.time()
-            print(f'Added {video_name} to results directory, Video #{video_count} completed in {(end - start)/3600:.2f} hours')
-            shutil.rmtree(video_frame_directory, ignore_errors=True)
+                #Save dataframe in pickle
+                video_name = os.path.splitext(os.path.basename(video_path))[0]
+                pickle_output_path = os.path.join(results_directory, f"{video_name}.pkl")
+                video_dataframe.to_pickle(pickle_output_path)
+                video_count += 1
+                end = time.time()
+                print(f'Added {video_name} to results directory, Video #{video_count} completed in {(end - start)/3600:.2f} hours')
+                shutil.rmtree(video_frame_directory, ignore_errors=True)
 
 video_directory = "/home/sebastian/extssd/ego4d/v2/full_scale"
 frame_directory = "/home/sebastian/VLMVision/ego4d/frames"
