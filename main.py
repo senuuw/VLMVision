@@ -53,6 +53,11 @@ def main(video_directory, frame_directory, results_directory, model, tokenizer, 
     video_count = 0
 
     for video_name_mp4 in video_name_list:
+        # Skip the specific problematic file
+        if video_name_mp4 == "c3f5972e-9919-496c-a01a-75ffa5c7bcff.mp4":
+            print(f"Skipping problematic video file: {video_name_mp4}")
+            continue
+
         video_path = os.path.join(video_directory, video_name_mp4)
         pickle_file_name = f"{video_name_mp4[:-4]}.pkl"
 
