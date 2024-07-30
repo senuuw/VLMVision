@@ -8,7 +8,7 @@ from frameextract import extract_video_frames
 from helper import get_video_length
 import time
 import shutil
-from multiprocessing import Process
+from multiprocessing import Process, set_start_method
 
 auto_gptq.modeling._base.SUPPORTED_MODELS = ["internlm"]
 torch.set_grad_enabled(False)
@@ -83,34 +83,37 @@ def split_list(lst, n):
     return [lst[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(n)]
 
 
-video_directory = "/home/sebastian/extssd/ego4d/v2/full_scale"
-frame_directory = "/home/sebastian/VLMVision/ego4d/frames"
-results_directory = "/home/sebastian/VLMVision/ego4d/results"
+if __name__ == '__main__':
+    scene_prompt = '<ImageHere> Please using only one word describe if the scene is outdoor or indoor.'
+    lighting_prompt = '<ImageHere> Please using only one word describe if the lighting in the image is bad or good.'
+    people_prompt = '<ImageHere> Please using only one word reply with True or False if there are people or body parts present.'
+    screen_prompt = ('<ImageHere> Please using only one word reply with True or False '
+                     'if there are any television/computer/phone screens on present.')
+    prompt_list = [scene_prompt, lighting_prompt, people_prompt, screen_prompt]
+    # Set the start method to 'spawn'
+    set_start_method('spawn')
 
-# Get full list of video names, skip first two already done and manifest
-video_name_list = os.listdir(video_directory)[2:]
-completed_video_name_list = os.listdir(results_directory)
+    video_directory = "/home/sebastian/extssd/ego4d/v2/full_scale"
+    frame_directory = "/home/sebastian/VLMVision/ego4d/frames"
+    results_directory = "/home/sebastian/VLMVision/ego4d/results"
 
-# Split the video list between the two GPUs
-video_chunks = split_list(video_name_list, 2)
+    # Get full list of video names, skip first two already done and manifest
+    video_name_list = os.listdir(video_directory)[2:]
+    completed_video_name_list = os.listdir(results_directory)
 
-processes = []
+    # Split the video list between the two GPUs
+    video_chunks = split_list(video_name_list, 2)
 
-scene_prompt = '<ImageHere> Please using only one word describe if the scene is outdoor or indoor.'
-lighting_prompt = '<ImageHere> Please using only one word describe if the lighting in the image is bad or good.'
-people_prompt = '<ImageHere> Please using only one word reply with True or False if there are people or body parts present.'
-screen_prompt = ('<ImageHere> Please using only one word reply with True or False '
-                 'if there are any television/computer/phone screens on present.')
-prompt_list = [scene_prompt, lighting_prompt, people_prompt, screen_prompt]
+    processes = []
 
-for i, video_chunk in enumerate(video_chunks):
-    device = get_device(i)
-    model, tokenizer = initialize_model(device)
+    for i, video_chunk in enumerate(video_chunks):
+        device = get_device(i)
+        model, tokenizer = initialize_model(device)
 
-    p = Process(target=process_videos,
-                args=(video_chunk, frame_directory, results_directory, model, tokenizer, prompt_list, device))
-    processes.append(p)
-    p.start()
+        p = Process(target=process_videos,
+                    args=(video_chunk, frame_directory, results_directory, model, tokenizer, prompt_list, device))
+        processes.append(p)
+        p.start()
 
-for p in processes:
-    p.join()
+    for p in processes:
+        p.join()
